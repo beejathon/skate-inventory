@@ -1,0 +1,44 @@
+<meta charset="UTF-8">
+<title><%= title %></title>
+
+<!-- CSS (load bootstrap from a CDN) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  body { padding-top:50px; }
+  .sidebar { padding-top:20px}
+  .btn-filter { 
+    margin-top: 1em; 
+    margin-bottom: 1em;
+    margin-right: 1em;  
+  }
+  fieldset:disabled {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', e => {
+    const typeSelect = document.getElementById('item-type')
+    const deckField = document.getElementById('Deck')
+    const trucksField = document.getElementById('Trucks')
+    const wheelsField = document.getElementById('Wheels')
+    const bearingsField = document.getElementById('Bearings')
+    const griptapeField = document.getElementById('Griptape')
+
+    if (typeSelect.value === 'Deck') deckField.disabled = false;
+    if (typeSelect.value === 'Trucks') trucksField.disabled = false;
+    if (typeSelect.value === 'Wheels') wheelsField.disabled = false;
+    if (typeSelect.value === 'Bearings') bearingsField.disabled = false;
+    if (typeSelect.value === 'Griptape') griptapeField.disabled = false;
+
+    document.forms.itemform.addEventListener('change', e => {
+      if (e.target.name == 'type') {
+        deckField.disabled = (e.target.value === 'Deck') ? false : true;
+        trucksField.disabled = (e.target.value === 'Trucks') ? false : true;
+        wheelsField.disabled = (e.target.value === 'Wheels') ? false : true;
+        bearingsField.disabled = (e.target.value === 'Bearings') ? false : true;
+        griptapeField.disabled = (e.target.value === 'Griptape') ? false : true;
+      }
+    })
+  })
+</script>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header') %>
+    </header>
+
+    <main>
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="jumbotron">
+            <h1><%= title %></h1>
+            <form method="POST" action="" name="itemform">
+              <div class="form-group">
+                <label for="type">Category:</label>
+                <select name="type" id="item-type" class="form-control">
+                  <% categories.forEach(category => { %>
+                    <% if (locals.item) { %>
+                      <option value="<%= category.name %>" <%= undefined===locals.item ? '' : category._id.toString()===item.category._id.toString() ? selected='selected' : '' %>><%= category.name %></option>
+                    <% } else { %>
+                      <option value="<%= category.name %>"><%= category.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="name">Name: </label>
+                <input type="text" name="name" class="form-control" value="<%= undefined===locals.item ? '' : item.name %>">
+              </div>
+              <div class="form-group">
+                <label for="description">Description: </label>
+                <input name="description" class="form-control" value="<%= undefined===locals.item ? '' : item.description %>">
+              </div>
+              <div class="form-group">
+                <label for="brand">Brand: </label>
+                <select name="brand" id="item-brand" class="form-control">
+                  <% brands.forEach(brand => { %>
+                    <% if (locals.item) { %>
+                      <option value="<%= brand.name %>" <%= undefined===locals.item ? '' : brand._id.toString()===item.brand._id.toString() ? selected='selected' : '' %>><%= brand.name %></option>
+                    <% } else { %>
+                      <option value="<%= brand.name %>"><%= brand.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <fieldset name="Deck" id="Deck" disabled>
+                  <label for="width">Width:</label>
+                  <input type="number" name="width" min="7" max="11" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.width %>">
+                  <label for="length">Length:</label>
+                  <input type="number" name="length" min="27" max="40" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.length %>">
+                  <label for="wheelbase">Wheelbase:</label>
+                  <input type="number" name="wheelbase" min="11" max="15" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.wheelbase %>">
+                </fieldset>
+                <fieldset name="Trucks" id="Trucks" disabled>
+                  <label for="width">Width:</label>
+                  <input type="number" name="width" min="5" max="7" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.width %>">
+                  <label for="height">Height:</label>
+                  <select name="height" id="" class="form-control" value="<%= undefined===locals.item ? '' : item.height %>">
+                    <option value="Low">Low</option>
+                    <option value="Mid">Mid</option>
+                    <option value="High">High</option>
+                  </select>
+                </fieldset>
+                <fieldset name="Wheels" id="Wheels" disabled>
+                  <label for="size">Size:</label>
+                  <input type="number" name="size" min="50" max="65" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.size %>">
+                  <label for="durometer">Durometer:</label>
+                  <input type="text" name="durometer" class="form-control" value="<%= undefined===locals.item ? '' : item.durometer %>">
+                </fieldset>
+                <fieldset name="Bearings" id="Bearings" disabled>
+                  <label for="rating">Rating:</label>
+                  <input type="text" name="rating" class="form-control" value="<%= undefined===locals.item ? '' : item.rating %>">
+                </fieldset>
+                <fieldset name="Griptape" id="Griptape" disabled>
+                  <label for="color">Color:</label>
+                  <input type="text" name="color" class="form-control" value="<%= undefined===locals.item ? '' : item.color %>">
+                </fieldset>
+              </div>
+              <div class="form-group">
+                  <label for="price">Price:</label>
+                  <input type="number" name="price" id="" step="0.01" class="form-control" value="<%= undefined===locals.item ? '' : item.price %>">
+                  <label for="stock">Stock:</label>
+                  <input type="number" name="stock" id="" class="form-control" value="<%= undefined===locals.item ? '' : item.stock %>">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a href="/catalog/" class="btn btn-secondary">Cancel</a>
+            </form>
+
+            <% if (locals.errors) { %>
+              <ul>
+                <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
+        </div>
+
+        <%- include('../partials/sidebar') %>
+    </main>
+
+    <footer>
+      <%- include('../partials/footer') %>
+    </footer>
+  </body>
+</html>
