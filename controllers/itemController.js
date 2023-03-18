@@ -11,7 +11,6 @@ const {
 const Brand = require('../models/brand');
 const Category = require('../models/category');
 const mongoose = require('mongoose');
-const { category_create_post } = require('./categoryController');
 
 exports.index = (req, res, next) => {
   async.parallel(
@@ -23,7 +22,9 @@ exports.index = (req, res, next) => {
         Category.find(callback);
       },
       brands(callback) {
-        Brand.find(callback)
+        Brand.find({})
+          .sort({ name: 1 })
+          .exec(callback)
       }
     },
     (err, results) => {
@@ -49,9 +50,12 @@ exports.item_detail = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.render("pages/item_detail", { title: "Item Detail", item })
+      res.render("pages/item_detail", { 
+        title: "Item Detail", 
+        item,
+      });
     })
-}
+};
 
 exports.item_create_get = (req, res, next) => {
   async.parallel(
@@ -188,7 +192,7 @@ exports.item_delete_get = (req, res, next) => {
         return next(err);
       }
       res.render("pages/item_delete", {
-        title: "Delete item",
+        title: "Delete Item",
         item: item,
       })
     });
@@ -199,7 +203,7 @@ exports.item_delete_post = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/catalog/items");
+    res.redirect("/catalog");
   });
 }
 
@@ -348,6 +352,6 @@ exports.item_update_post = [
       }
 
       res.redirect(`/catalog/item/${theitem._id}`)
-    })
+    });
   }
 ]
